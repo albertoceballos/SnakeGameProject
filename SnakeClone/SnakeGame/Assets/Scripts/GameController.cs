@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour {
     private int highScore;
     public float speed = 4.0f;
 
+    private Vector2 origin;
+
     void TailFunction()
     {
         Snake tempSnake = tail;
@@ -29,7 +31,7 @@ public class GameController : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-        InvokeRepeating("TimerInvoke",0, 0.5f);
+        InvokeRepeating("TimerInvoke",0, 0.2f);
         FoodFunctions();
         highScore = PlayerPrefs.GetInt("HighScore");
 	}
@@ -127,6 +129,33 @@ public class GameController : MonoBehaviour {
         if(NESW!=1 && Input.GetKeyDown(KeyCode.A))
         {
             NESW = 3;
+        }
+        if(Input.touchCount > 0)
+        {
+            Touch t = Input.touches[0];
+            if(t.phase == TouchPhase.Began)
+            {
+                origin = t.position;
+            }else if (t.phase == TouchPhase.Ended)
+            {
+                float dx = t.position.x - origin.x;
+                float dy = t.position.y - origin.y;
+                if (dx < 0 && NESW!=1) //left movement or A code
+                {
+                    NESW = 3;
+                }
+                if(dx>0 && NESW != 3) //right movement or D code
+                {
+                    NESW = 1;
+                }
+                if (dy > 0 && NESW!=2) { //up
+                    NESW = 0;
+                }
+                if(dy<0 && NESW != 0) //down
+                {
+                    NESW = 2;
+                }
+            }
         }
     }
 
