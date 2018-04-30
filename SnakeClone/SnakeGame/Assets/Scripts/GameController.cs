@@ -140,18 +140,18 @@ public class GameController : MonoBehaviour {
             {
                 float dx = t.position.x - origin.x;
                 float dy = t.position.y - origin.y;
-                if (dx < 0 && NESW!=1) //left movement or A code
+                if (dx < 1f && NESW!=1) //left movement or A code
                 {
                     NESW = 3;
                 }
-                if(dx>0 && NESW != 3) //right movement or D code
+                else if(dx>1f && NESW != 3) //right movement or D code
                 {
                     NESW = 1;
                 }
-                if (dy > 0 && NESW!=2) { //up
+                else if (dy > 1f && NESW!=2) { //up
                     NESW = 0;
                 }
-                if(dy<0 && NESW != 0) //down
+                else if(dy<1f && NESW != 0) //down
                 {
                     NESW = 2;
                 }
